@@ -16,7 +16,7 @@ import static com.montealegreluis.caseconverter.CaseConverter.camelCaseToSentenc
 public class Application {
   public static void main(String[] args) {
     System.out.println(camelCaseToKebabCase("ParseXMLDocument")); // parse-xml-document
-    System.out.println(camelCaseToSentence("PurchaseTickets")); // Purchase tickets parse-xml-document
+    System.out.println(camelCaseToSentence("PurchaseTickets")); // Purchase tickets
   }
 }
 ```

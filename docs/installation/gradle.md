@@ -29,4 +29,4 @@ Lastly, add the following entry to your `dependencies` in your `build.gradle` fi
 implementation 'com.montealegreluis:case-converter:1.0.0'
 ```
 
-Please find what the latest version is [here](https://github.com/MontealegreLuis/case-converter/packages/1188930).
+Please find what the latest version is [here](https://github.com/MontealegreLuis/case-converter/packages/1618000).
