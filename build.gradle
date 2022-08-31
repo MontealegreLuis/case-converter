@@ -1,0 +1,65 @@
+plugins {
+    id 'java-library'
+    id 'jacoco'
+    id 'maven-publish'
+    id 'com.github.sherter.google-java-format' version '0.9'
+    id 'info.solidsoft.pitest' version '1.7.0'
+}
+
+group 'com.montealegreluis'
+
+apply from: rootProject.file('hooks.gradle')
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${jUnitVersion}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${jUnitVersion}"
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/montealegreluis/case-converter")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy("jacocoTestReport")
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        html.destination file("${buildDir}/coverage")
+    }
+}
+
+pitest {
+    threads = 4
+    outputFormats = ['HTML']
+    timestampedReports = false
+    junit5PluginVersion = '0.15'
+    coverageThreshold = 88
+    mutationThreshold = 98
+}
